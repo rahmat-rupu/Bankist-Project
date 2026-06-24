@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -162,6 +164,18 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amonut = Number(inputLoanAmount.value);
+
+  if (amonut > 0 && currentAccount.movements.some(mov => mov >= amonut * 0.1)) {
+    currentAccount.movements.push(amonut);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -177,6 +191,14 @@ btnClose.addEventListener('click', function (e) {
     containerApp.style.opacity = 0;
   }
   inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -295,7 +317,7 @@ const deposits = movements.filter(function (mov) {
 
 console.log(deposits); */
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+/* const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const balance = movements.reduce(
   (acc, curr) =>
     // console.log(acc);
@@ -319,3 +341,58 @@ console.log(firstWithdrawal);
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+ */
+
+/* const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const anyDeposits = movements.some(mov => mov > 5000);
+console.log(anyDeposits);
+
+console.log(account4.movements.every(mov => mov > 0));
+
+const deposit = mov => mov > 0;
+
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.find(deposit)); */
+
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr.flat());
+
+// const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+// console.log(arrDeep.flat(2));
+
+/* const overallMov = [
+  ...account1.movements,
+  ...account2.movements,
+  ...account3.movements,
+  ...account4.movements,
+];
+console.log(overallMov);
+
+const overallBalance = overallMov.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance); */
+
+/* const accountMovements = accounts.map(acc => acc.movements);
+const allMovements = accountMovements.flat();
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+const accountMovements1 = accounts.flatMap(acc => acc.movements);
+const overallBalance1 = accountMovements1.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance1); */
+
+const owners = ['Rupu', 'Asha', 'Irfat', 'Rahmat'];
+console.log(owners.sort());
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log(movements);
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (b > a) return -1;
+// });
+
+movements.sort((a, b) => a - b);
+
+console.log(movements);
