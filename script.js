@@ -382,7 +382,7 @@ const accountMovements1 = accounts.flatMap(acc => acc.movements);
 const overallBalance1 = accountMovements1.reduce((acc, mov) => acc + mov, 0);
 console.log(overallBalance1); */
 
-const owners = ['Rupu', 'Asha', 'Irfat', 'Rahmat'];
+/* const owners = ['Rupu', 'Asha', 'Irfat', 'Rahmat'];
 console.log(owners.sort());
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -396,3 +396,20 @@ console.log(movements);
 movements.sort((a, b) => a - b);
 
 console.log(movements);
+ */
+
+const x = new Array(7);
+console.log(x);
+
+x.fill(1, 3, 5);
+console.log(x);
+
+const y = Array.from({ length: 7 }, () => 9);
+console.log(y);
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+  );
+  console.log(movementsUI.map(el => el.textContent));
+});
