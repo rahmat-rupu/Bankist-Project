@@ -72,7 +72,7 @@ const displayMovements = function (movements, sort = false) {
     const html = `
       <div class="movements__row">
           <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov.toFixed(2)}</div>
         </div`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -100,18 +100,18 @@ const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}💲`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}💲`;
 
   const outMoney = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(outMoney)}💲`;
+  labelSumOut.textContent = `${Math.abs(outMoney).toFixed(2)}💲`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumInterest.textContent = `${interest}💲`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}💲`;
 };
 
 //Event Handlers
@@ -139,13 +139,13 @@ btnLogin.addEventListener('click', function (e) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}💲`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}💲`;
 };
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = +inputTransferAmount.value;
+  const amount = Math.floor(inputTransferAmount.value);
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value,
   );
